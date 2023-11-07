@@ -102,4 +102,3 @@ recommend_players_for_team([PlayerId | Rest], Team) :-
     write(PlayerName), nl,
     
     recommend_players_for_team(Rest, Team).
-

@@ -2,8 +2,8 @@
 
 % Règle pour recommander des joueurs en fonction du salaire
 recommend_low_salary(PlayerId, Team) :- 
-    wage_eur(PlayerId , Wage), 
-    Wage < 50000,  
+    wage_eur(PlayerId, Wage), 
+    Wage <= 50000,  
     potential(PlayerId, Potential), 
     Potential >= 85, 
     assertz(recommended(PlayerId, Team)).
@@ -52,7 +52,7 @@ recommend_preferred_foot(PlayerId, Team, PreferredFoot) :-
     assertz(recommended(PlayerId, Team)).
 
 % Règle pour recommander des joueurs avec des compétences spécifiques
-recommend_skill(PlayerId, Team, SkillMove) :- 
+recommend_skill(PlayerId, Team, Skill) :- 
     skill_move(PlayerId, SkillMove), 
     SkillMove >= 4,  
     assertz(recommended(PlayerId, Team)).
@@ -94,7 +94,7 @@ style_de_jeu('jeu offensif rapide').
 
 % Styles de jeu des équipes
 style_de_jeu('FC Barcelona', 'tiki-taka').
-style_de_jeu('RealMadrid', 'counter-attack').
+style_de_jeu('Real Madrid', 'counter-attack').
 style_de_jeu('Liverpool FC', 'high-pressing').
 style_de_jeu('Manchester City', 'possession play').
 style_de_jeu('Bayern Munich', 'high pressing').
@@ -123,33 +123,33 @@ style_de_jeu('Celtic FC', 'direct play').
 style_de_jeu('Ajax', 'possession play').
 
 % Entraîneurs connus
-strategie_entraineur('Pep Guardiola', 'possession play').
-strategie_entraineur('Jurgen Klopp', 'high pressing').
-strategie_entraineur('Diego Simeone', 'defensive counter-attacks').
-strategie_entraineur('Carlo Ancelotti', 'possession play').
-strategie_entraineur('Zinedine Zidane', 'counter-attack').
-strategie_entraineur('Thomas Tuchel', 'attacking play').
-strategie_entraineur('Antonio Conte', 'defensive play').
-strategie_entraineur('Ole Gunnar Solskjaer', 'direct play').
-strategie_entraineur('Mikel Arteta', 'possession play').
-strategie_entraineur('Stefano Pioli', 'counter-attack').
-strategie_entraineur('Marco Rose', 'high pressing').
-strategie_entraineur('Sergio Conceicao', 'defensive play').
-strategie_entraineur('Massimiliano Allegri', 'possession play').
-strategie_entraineur('Nuno Espirito Santo', 'high pressing').
-strategie_entraineur('Simone Inzaghi', 'counter-attack').
-strategie_entraineur('Erik ten Hag', 'attacking play').
-strategie_entraineur('Sérgio Conceição', 'defensive play').
-strategie_entraineur('Luciano Spalletti', 'possession play').
-strategie_entraineur('Brendan Rodgers', 'counter-attack').
-strategie_entraineur('Rafa Benítez', 'high pressing').
-strategie_entraineur('Marcelo Bielsa', 'high pressing').
-strategie_entraineur('Jorge Jesus', 'attacking play').
-strategie_entraineur('Marcelino', 'defensive play').
-strategie_entraineur('Andrea Pirlo', 'possession play').
-strategie_entraineur('Steven Gerrard', 'counter-attack').
-strategie_entraineur('Diego Maradona', 'direct play').
-strategie_entraineur('Ronald Koeman', 'possession play').
+strategie_entraîneur('Pep Guardiola', 'possession play').
+strategie_entraîneur('Jurgen Klopp', 'high pressing').
+strategie_entraîneur('Diego Simeone', 'defensive counter-attacks').
+strategie_entraîneur('Carlo Ancelotti', 'possession play').
+strategie_entraîneur('Zinedine Zidane', 'counter-attack').
+strategie_entraîneur('Thomas Tuchel', 'attacking play').
+strategie_entraîneur('Antonio Conte', 'defensive play').
+strategie_entraîneur('Ole Gunnar Solskjaer', 'direct play').
+strategie_entraîneur('Mikel Arteta', 'possession play').
+strategie_entraîneur('Stefano Pioli', 'counter-attack').
+strategie_entraîneur('Marco Rose', 'high pressing').
+strategie_entraîneur('Sergio Conceicao', 'defensive play').
+strategie_entraîneur('Massimiliano Allegri', 'possession play').
+strategie_entraîneur('Nuno Espirito Santo', 'high pressing').
+strategie_entraîneur('Simone Inzaghi', 'counter-attack').
+strategie_entraîneur('Erik ten Hag', 'attacking play').
+strategie_entraîneur('Sérgio Conceição', 'defensive play').
+strategie_entraîneur('Luciano Spalletti', 'possession play').
+strategie_entraîneur('Brendan Rodgers', 'counter-attack').
+strategie_entraîneur('Rafa Benítez', 'high pressing').
+strategie_entraîneur('Marcelo Bielsa', 'high pressing').
+strategie_entraîneur('Jorge Jesus', 'attacking play').
+strategie_entraîneur('Marcelino', 'defensive play').
+strategie_entraîneur('Andrea Pirlo', 'possession play').
+strategie_entraîneur('Steven Gerrard', 'counter-attack').
+strategie_entraîneur('Diego Maradona', 'direct play').
+strategie_entraîneur('Ronald Koeman', 'possession play').
 
 
 recommander_joueur_style(X, Y) :-
@@ -175,36 +175,36 @@ recommander_joueur_perf(X, Y) :-
 recommander_joueur_strategie(X, Y) :-
     joueur(X),
     club(X, Club),
-    strategie_entraineur(Entraineur, Strategie),
-    club_entraineur(Club, Entraineur),
+    strategie_entraîneur(Entraîneur, Stratégie),
+    club_entraineur(Club, Entraîneur),
     club(Y, Club),
     X \= Y,
-    club_strategie(Y, Strategie).
+    club_strategie(Y, Stratégie).
 
 correspond_style_de_jeu(X, 'tiki-taka') :-
     joueur(X),
-    possession_de_balle(X, 'Elevee'),
-    passes_courtes(X, 'Elevees'),
-    rapidite_circulation(X, 'Elevee').
+    possession_de_balle(X, Élevée),
+    passes_courtes(X, Élevées),
+    rapidité_circulation(X, Élevée).
 
 correspond_style_de_jeu(X, 'contre-attaque') :-
     joueur(X),
-    vitesse(X, 'Elevee'),
-    exploitation_espaces_libres(X, 'Elevee'),
-    jeu_transition(X, 'Eleve').
+    vitesse(X, Élevée),
+    exploitation_espaces_libres(X, Élevée),
+    jeu_transition(X, Élevé).
 
 correspond_style_de_jeu(X, 'jeu physique') :-
     joueur(X),
-    force(X, 'Elevee'),
-    puissance_physique(X, 'Elevee'),
-    jeu_aerien(X, 'Eleve').
+    force(X, Élevée),
+    puissance_physique(X, Élevée),
+    jeu_aerien(X, Élevé).
 
 correspond_style_de_jeu(X, 'jeu direct') :-
     joueur(X),
-    passes_longues(X, 'Elevees'),
-    recherche_rapide_buts(X, 'Elevee').
+    passes_longues(X, Élevées),
+    recherche_rapide_buts(X, Élevée).
 
 correspond_style_de_jeu(X, 'pressing haut') :-
     joueur(X),
-    agressivite(X, 'Elevee'),
-    jeu_demi_terrain_adverse(X, 'Eleve').
+    agressivité(X, Élevée),
+    jeu_demi_terrain_adverse(X, Élevé).

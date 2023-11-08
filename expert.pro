@@ -20,23 +20,23 @@ recommander_joueur_jeu_direct(PlayerId, Team) :-
 recommander_milieu_creatif(PlayerId, Team) :-
     joueur(PlayerId),
     milieu_de_terrain(PlayerId),
-    creativite(PlayerId, 'Elevee'),
+    créativité(PlayerId, Élevée),
     assertz(recommended(PlayerId, Team)).
 
 % Exemple de règle experte : Recommander un défenseur solide
-recommander_defenseur_solide(PlayerId, Team ) :-
+recommander_defenseur_solide(PlayerId, Team) :-
     joueur(PlayerId),
-    defenseur(PlayerId),
-    robustesse(PlayerId, 'Elevee'),
+    défenseur(PlayerId),
+    robustesse(PlayerId, Élevée),
     assertz(recommended(PlayerId, Team)).
 
 
 
 % Exemple de règle experte : Recommander un gardien de but réactif
-recommander_gardien_reactif(PlayerId, Team) :-
+recommander_gardien_réactif(PlayerId, Team) :-
     joueur(PlayerId),
     gardien_de_but(PlayerId),
-    reflexes(PlayerId, 'Eleves'),
+    réflexes(PlayerId, Élevés),
     assertz(recommended(PlayerId, Team)).
 
 
@@ -54,10 +54,12 @@ test() :-
     write('9. Skillful Player (Skill move >= 4)'), nl,
     write('10. Current Club Match (Matches the current club)'), nl,
     write('11. Body Type Match (Matches the body type)'), nl,
-    write('Enter the number of your choice: '),nl,
+    write('Enter the number of your choice: '),
+    nl,
     read(RecommendationType),
     integer(RecommendationType),
-    write('Enter the name of the team: '),nl,
+    write('Enter the name of the team: '),
+    nl,
     read(Team),
     string(Team),  % Assuming team names are strings
     % You can add other logic to input necessary parameters or conditions
@@ -100,3 +102,4 @@ recommend_players_for_team([PlayerId | Rest], Team) :-
     write(PlayerName), nl,
     
     recommend_players_for_team(Rest, Team).
+
